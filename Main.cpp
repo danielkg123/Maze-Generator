@@ -5,13 +5,22 @@
 using namespace std;
 
 int main() {
-    MazeGenerator generator(4, 4);
+    // membuat maze, input ukuran maze
+    MazeGenerator generator(50, 50);
+
+    // memberitau "aku ingin menjadi admin, aku ingin lihat proses generate maze"
+    // jika ingin generate maze besar, disarankan jangan menggunakan mode admin
+    generator.setAdmin(false);
+
+    // generate maze
     generator.generateMaze();
     
-    cout << "Vertice dan edge map : " << endl;
+    // menampilkan maze dalam bentuk graph
+    cout << "Isi Graph : " << endl;
     generator.maze.printGraph();
 
-    cout << "Display Maze : " << endl;
+    // menampilkan tampilan maze
+    cout << endl << "Display Maze : " << endl;
     string** arrDisplay = generator.getDisplayMaze();
     generator.displayMaze(arrDisplay);
 
