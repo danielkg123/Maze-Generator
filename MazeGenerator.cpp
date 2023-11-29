@@ -8,6 +8,7 @@ NRP : C14220039
 #include <ctime>
 #include <vector>
 #include "GraphAdjList.cpp"
+#include "MazeDisplay.cpp"
 using namespace std;
 
 class MazeGenerator
@@ -18,11 +19,12 @@ public:
     int y;
     int spawnX;
     int spawnY;
-
     MazeGenerator(int x = 0, int y = 0) : x(x), y(y), spawnX(0), spawnY(0), maze(x * y, false, false) {}
+
 
     void generateMaze()
     {
+        cout << x << y << endl;
         // create 2D vector x * y of 0s
         vector<vector<int> > map(x, vector<int>(y, 0));
 
@@ -53,6 +55,88 @@ public:
             cout << endl;
         }
         cout << endl;
+    }
+
+    // Display Maze 
+    // Pembuat : Daniel Kristianto Goenadi Go
+    // NRP : C14220329
+    // display menggunakan array2d untuk mudah di edit
+    string** getDisplayMaze(){
+
+        // Pembuatan Array setiap Node 3x3 jadi untuk display dikali 3
+
+        string** display;
+        display = new string*[x*3 +1];
+        // [x*3 +1][y*3+1];
+
+        // untuk display menggunakan array base 1 bukan dari 0 jadi mudah untuk menggunakan rumus
+        for (int i = 1 ; i<= (x*3); i++){
+            display[i] = new string[y*3+1];
+            for(int j = 1 ; j<= (x*3); j++){
+                display[i][j] = "#";
+            }
+        }
+
+        for (int i = 1 ; i<= x; i++){
+            for(int j = 1 ; j<= y; j++){
+                display[i*3-1][j*3-1] = '.'; // rumus mengambil tengah i * 3 - 1 berlaku untuk panjang dan lebar
+            }
+        }
+
+        // Penamaan vertice dalam map yang dibuat (ada di fungsi generateMaze)
+        // 0 1 2 3
+        // 4 5 6 7
+        // 8 9 10 11
+        // 12 13 14 15
+        // contoh : vertice 2 ada di x = 3, y = 1
+
+
+
+        int mazeY = 2; // 2 adalah vertice 0
+        int mazeX = 2; // 2 adalah vertice 0
+        int counter = 0;
+        // cout << maze.vertices;
+        for (int i = 0; i < maze.vertices; i++){      
+            counter++;
+            
+            // cout << mazeY << " and " << mazeX <<  endl;
+            for (const Edge neighbour : maze.adjList[i]){
+                // CHECK LEFT SIDE OF NODE
+                if (i-1 == neighbour.vertice){
+                    display[mazeY][mazeX-1] = ' ';        
+                }
+                // CHECK RIGHT SIDE OF NODE
+                if(i+1 == neighbour.vertice){ 
+                    display[mazeY][mazeX+1] = ' ';  
+                }
+                // CHECK TOP SIDE OF NODE
+                if(i-x == neighbour.vertice){
+                    display[mazeY-1][mazeX] = ' ';  
+                }
+                // CHECK BOTTOM SIDE OF NODE
+                if(i+x == neighbour.vertice){
+                    display[mazeY+1][mazeX] = ' ';  
+                }
+            }
+
+
+            // tambah koordinat untuk menyesuaikan
+            mazeX +=3;
+            if(counter%x == 0){
+                mazeY+=3;
+                mazeX = 2;
+            }
+        }
+        return display;
+    }
+
+    void displayMaze(string** arr){
+        for (int i = 1 ; i<= (x*3); i++){
+            for(int j = 1 ; j<= (x*3); j++){
+                cout<< arr[i][j];
+            }
+            cout << endl;
+        }
     }
 
 private:
