@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    MazeGenerator generator(4, 4);
+    MazeGenerator generator(10, 20);
     generator.generateMaze();
     
     cout << "Vertice dan edge map : " << endl;

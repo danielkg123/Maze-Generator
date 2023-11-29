@@ -8,7 +8,7 @@ NRP : C14220039
 #include <ctime>
 #include <vector>
 #include "GraphAdjList.cpp"
-
+#include "MazeDisplay.cpp"
 using namespace std;
 
 class MazeGenerator
@@ -72,9 +72,9 @@ public:
         // untuk display menggunakan array base 1 bukan dari 0 jadi mudah untuk menggunakan rumus
         for (int i = 1 ; i<= (x*3); i++){
             display[i] = new string[y*3+1];
-            for(int j = 1 ; j<= (x*3); j++){
+            for(int j = 1 ; j<= (y*3); j++){
                 display[i][j] = "#";
-            }
+            } 
         }
 
         for (int i = 1 ; i<= x; i++){
@@ -103,28 +103,28 @@ public:
             for (const Edge neighbour : maze.adjList[i]){
                 // CHECK LEFT SIDE OF NODE
                 if (i-1 == neighbour.vertice){
-                    display[mazeY][mazeX-1] = ' ';        
+                    display[mazeX][mazeY-1] = ' ';        
                 }
                 // CHECK RIGHT SIDE OF NODE
                 if(i+1 == neighbour.vertice){ 
-                    display[mazeY][mazeX+1] = ' ';  
+                    display[mazeX][mazeY+1] = ' ';  
                 }
                 // CHECK TOP SIDE OF NODE
-                if(i-x == neighbour.vertice){
-                    display[mazeY-1][mazeX] = ' ';  
+                if(i-y == neighbour.vertice){
+                    display[mazeX-1][mazeY] = ' ';  
                 }
                 // CHECK BOTTOM SIDE OF NODE
-                if(i+x == neighbour.vertice){
-                    display[mazeY+1][mazeX] = ' ';  
+                if(i+y == neighbour.vertice){
+                    display[mazeX+1][mazeY] = ' ';  
                 }
             }
 
 
             // tambah koordinat untuk menyesuaikan
-            mazeX +=3;
-            if(counter%x == 0){
-                mazeY+=3;
-                mazeX = 2;
+            mazeY +=3;
+            if(counter%y == 0){
+                mazeX+=3;
+                mazeY = 2;
             }
         }
         return display;
@@ -132,7 +132,7 @@ public:
 
     void displayMaze(string** arr){
         for (int i = 1 ; i<= (x*3); i++){
-            for(int j = 1 ; j<= (x*3); j++){
+            for(int j = 1 ; j<= (y*3); j++){
                 cout<< arr[i][j];
             }
             cout << endl;
@@ -147,19 +147,19 @@ private:
 
         // TODO: hapus kalau sudah selesai
         // display map
-        for (int i = 0; i < map.size(); i++)
-        {
-            for (int j = 0; j < map[i].size(); j++)
-            {
-                if (i == currentX && j == currentY)
-                    cout << "X ";
-                else
-                    cout << map[i][j] << " ";
-            }
-            cout << endl;
-        }
+        // for (int i = 0; i < map.size(); i++)
+        // {
+        //     for (int j = 0; j < map[i].size(); j++)
+        //     {
+        //         if (i == currentX && j == currentY)
+        //             cout << "X ";
+        //         else
+        //             cout << map[i][j] << " ";
+        //     }
+        //     cout << endl;
+        // }
 
-        cout << endl;
+        // cout << endl;
 
         // loop until no neighbour left
         while (true)
@@ -179,7 +179,7 @@ private:
             {
                 vertice = convertVertice(currentX - 1, currentY);
                 // TODO: hapus kalau sudah selesai
-                cout << "vertice : " << vertice << endl;
+                // cout << "vertice : " << vertice << endl;
                 maze.addEdge(convertVertice(currentX, currentY), vertice);
                 recursiveMap(map, currentX - 1, currentY);
             }
@@ -187,7 +187,7 @@ private:
             {
                 vertice = convertVertice(currentX + 1, currentY);
                 // TODO: hapus kalau sudah selesai
-                cout << "vertice : " << vertice << endl;
+                // cout << "vertice : " << vertice << endl;
                 maze.addEdge(convertVertice(currentX, currentY), vertice);
                 recursiveMap(map, currentX + 1, currentY);
             }
@@ -195,7 +195,7 @@ private:
             {
                 vertice = convertVertice(currentX, currentY - 1);
                 // TODO: hapus kalau sudah selesai
-                cout << "vertice : " << vertice << endl;
+                // cout << "vertice : " << vertice << endl;
                 maze.addEdge(convertVertice(currentX, currentY), vertice);
                 recursiveMap(map, currentX, currentY - 1);
             }
@@ -203,7 +203,7 @@ private:
             {
                 vertice = convertVertice(currentX, currentY + 1);
                 // TODO: hapus kalau sudah selesai
-                cout << "vertice : " << vertice << endl;
+                // cout << "vertice : " << vertice << endl;
                 maze.addEdge(convertVertice(currentX, currentY), vertice);
                 recursiveMap(map, currentX, currentY + 1);
             }
