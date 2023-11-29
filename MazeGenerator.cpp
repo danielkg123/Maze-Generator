@@ -8,7 +8,7 @@ NRP : C14220039
 #include <ctime>
 #include <vector>
 #include "GraphAdjList.cpp"
-#include "MazeDisplay.cpp"
+
 using namespace std;
 
 class MazeGenerator
