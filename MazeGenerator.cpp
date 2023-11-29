@@ -1,3 +1,8 @@
+/*
+Pembuat : Fellix Allenfant
+NRP : C14220039
+*/
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
