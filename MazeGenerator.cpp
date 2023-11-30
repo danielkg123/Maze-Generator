@@ -10,7 +10,7 @@ Membuat base untuk maze generator
 #include <vector>
 #include <random>
 #include "GraphAdjList.cpp"
-
+#include "MazeDisplay.cpp"
 using namespace std;
 
 // class maze generator
@@ -98,13 +98,11 @@ public:
         // [x*3 +1][y*3+1];
 
         // untuk display menggunakan array base 1 bukan dari 0 jadi mudah untuk menggunakan rumus
-        for (int i = 1; i <= (x * 3); i++)
-        {
-            display[i] = new string[y * 3 + 1];
-            for (int j = 1; j <= (x * 3); j++)
-            {
+        for (int i = 1 ; i<= (x*3); i++){
+            display[i] = new string[y*3+1];
+            for(int j = 1 ; j<= (x*3); j++){
                 display[i][j] = "#";
-            }
+            } 
         }
 
         for (int i = 1; i <= x; i++)
@@ -134,45 +132,37 @@ public:
             for (const Edge neighbour : maze.adjList[i])
             {
                 // CHECK LEFT SIDE OF NODE
-                if (i - 1 == neighbour.vertice)
-                {
-                    display[mazeY][mazeX - 1] = ' ';
+                if (i-1 == neighbour.vertice){
+                    display[mazeY][mazeX-1] = ' ';        
                 }
                 // CHECK RIGHT SIDE OF NODE
-                if (i + 1 == neighbour.vertice)
-                {
-                    display[mazeY][mazeX + 1] = ' ';
+                if(i+1 == neighbour.vertice){ 
+                    display[mazeY][mazeX+1] = ' ';  
                 }
                 // CHECK TOP SIDE OF NODE
-                if (i - x == neighbour.vertice)
-                {
-                    display[mazeY - 1][mazeX] = ' ';
+                if(i-x == neighbour.vertice){
+                    display[mazeY-1][mazeX] = ' ';  
                 }
                 // CHECK BOTTOM SIDE OF NODE
-                if (i + x == neighbour.vertice)
-                {
-                    display[mazeY + 1][mazeX] = ' ';
+                if(i+x == neighbour.vertice){
+                    display[mazeY+1][mazeX] = ' ';  
                 }
             }
 
             // tambah koordinat untuk menyesuaikan
-            mazeX += 3;
-            if (counter % x == 0)
-            {
-                mazeY += 3;
+            mazeX +=3;
+            if(counter%x == 0){
+                mazeY+=3;
                 mazeX = 2;
             }
         }
         return display;
     }
 
-    void displayMaze(string **arr)
-    {
-        for (int i = 1; i <= (x * 3); i++)
-        {
-            for (int j = 1; j <= (x * 3); j++)
-            {
-                cout << arr[i][j];
+    void displayMaze(string** arr){
+        for (int i = 1 ; i<= (x*3); i++){
+            for(int j = 1 ; j<= (x*3); j++){
+                cout<< arr[i][j];
             }
             cout << endl;
         }
@@ -185,23 +175,21 @@ private:
         // ingat posisi sekarang sudah dikunjungi
         map[currentX][currentY] = 1;
 
-        // tampilkan map (jika admin)
-        if (isAdmin)
+        // TODO: hapus kalau sudah selesai
+        // display map
+        for (int i = 0; i < map.size(); i++)
         {
-            // display map
-            for (int i = 0; i < map.size(); i++)
+            for (int j = 0; j < map[i].size(); j++)
             {
-                for (int j = 0; j < map[i].size(); j++)
-                {
-                    if (i == currentX && j == currentY)
-                        cout << "X ";
-                    else
-                        cout << map[i][j] << " ";
-                }
-                cout << endl;
+                if (i == currentX && j == currentY)
+                    cout << "X ";
+                else
+                    cout << map[i][j] << " ";
             }
             cout << endl;
         }
+
+        cout << endl;
 
         // function berhenti ketika sudah tidak ada tetangga available
         while (true)
@@ -231,47 +219,39 @@ private:
             int targetY = 0;
             if (neighbour == 1)
             {
-                targetX = currentX - 1;
-                targetY = currentY;
+                vertice = convertVertice(currentX - 1, currentY);
+                // TODO: hapus kalau sudah selesai
+                cout << "vertice : " << vertice << endl;
+                maze.addEdge(convertVertice(currentX, currentY), vertice);
+                recursiveMap(map, currentX - 1, currentY);
             }
             else if (neighbour == 2)
             {
-                targetX = currentX + 1;
-                targetY = currentY;
+                vertice = convertVertice(currentX + 1, currentY);
+                // TODO: hapus kalau sudah selesai
+                cout << "vertice : " << vertice << endl;
+                maze.addEdge(convertVertice(currentX, currentY), vertice);
+                recursiveMap(map, currentX + 1, currentY);
             }
             else if (neighbour == 3)
             {
-                targetX = currentX;
-                targetY = currentY - 1;
+                vertice = convertVertice(currentX, currentY - 1);
+                // TODO: hapus kalau sudah selesai
+                cout << "vertice : " << vertice << endl;
+                maze.addEdge(convertVertice(currentX, currentY), vertice);
+                recursiveMap(map, currentX, currentY - 1);
             }
             else if (neighbour == 4)
             {
-                targetX = currentX;
-                targetY = currentY + 1;
+                vertice = convertVertice(currentX, currentY + 1);
+                // TODO: hapus kalau sudah selesai
+                cout << "vertice : " << vertice << endl;
+                maze.addEdge(convertVertice(currentX, currentY), vertice);
+                recursiveMap(map, currentX, currentY + 1);
             }
-
-            // mencari posisi tetangga dan disimpan dalam graph
-            int vertice = convertVertice(targetX, targetY);
-            maze.addEdge(convertVertice(currentX, currentY), vertice);
-
-            // menampilkan posisi tetangga terpilih (jika admin)
-            if (isAdmin)
-                cout << "Neighbour's Vertice : " << vertice << endl;
-
-            // rekursif untuk tetangga terpilih
-            recursiveMap(map, targetX, targetY);
         }
     }
 
-    /*
-     * function untuk memilih tetangga yang available di posisi sekarang
-     * jika tidak ada tetangga, return 0
-     * jika ada tetangga, return code tetangga (1, 2, 3, 4)
-     * 1 = atas
-     * 2 = bawah
-     * 3 = kiri
-     * 4 = kanan
-     */
     int chooseNeighbour(vector<vector<int> > &map, int currentX, int currentY)
     {
         // cek tetangga yang available, disimpan ke dalam array
