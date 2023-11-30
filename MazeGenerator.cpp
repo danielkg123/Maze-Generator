@@ -10,7 +10,6 @@ Membuat base untuk maze generator
 #include <vector>
 #include <random>
 #include "GraphAdjList.cpp"
-#include "MazeDisplay.cpp"
 using namespace std;
 
 // class maze generator
@@ -90,26 +89,25 @@ public:
      * NRP : C14220329
      * display menggunakan array2d untuk mudah di edit
      */
-    string **getDisplayMaze()
-    {
+    string** getDisplayMaze(){
+
         // Pembuatan Array setiap Node 3x3 jadi untuk display dikali 3
-        string **display;
-        display = new string *[x * 3 + 1];
+
+        string** display;
+        display = new string*[x*3 +1];
         // [x*3 +1][y*3+1];
 
         // untuk display menggunakan array base 1 bukan dari 0 jadi mudah untuk menggunakan rumus
         for (int i = 1 ; i<= (x*3); i++){
             display[i] = new string[y*3+1];
-            for(int j = 1 ; j<= (x*3); j++){
+            for(int j = 1 ; j<= (y*3); j++){
                 display[i][j] = "#";
             } 
         }
 
-        for (int i = 1; i <= x; i++)
-        {
-            for (int j = 1; j <= y; j++)
-            {
-                display[i * 3 - 1][j * 3 - 1] = '.'; // rumus mengambil tengah i * 3 - 1 berlaku untuk panjang dan lebar
+        for (int i = 1 ; i<= x; i++){
+            for(int j = 1 ; j<= y; j++){
+                display[i*3-1][j*3-1] = '.'; // rumus mengambil tengah i * 3 - 1 berlaku untuk panjang dan lebar
             }
         }
 
@@ -120,40 +118,41 @@ public:
         // 12 13 14 15
         // contoh : vertice 2 ada di x = 3, y = 1
 
+
+
         int mazeY = 2; // 2 adalah vertice 0
         int mazeX = 2; // 2 adalah vertice 0
         int counter = 0;
         // cout << maze.vertices;
-        for (int i = 0; i < maze.vertices; i++)
-        {
+        for (int i = 0; i < maze.vertices; i++){      
             counter++;
-
+            
             // cout << mazeY << " and " << mazeX <<  endl;
-            for (const Edge neighbour : maze.adjList[i])
-            {
+            for (const Edge neighbour : maze.adjList[i]){
                 // CHECK LEFT SIDE OF NODE
                 if (i-1 == neighbour.vertice){
-                    display[mazeY][mazeX-1] = ' ';        
+                    display[mazeX][mazeY-1] = ' ';        
                 }
                 // CHECK RIGHT SIDE OF NODE
                 if(i+1 == neighbour.vertice){ 
-                    display[mazeY][mazeX+1] = ' ';  
+                    display[mazeX][mazeY+1] = ' ';  
                 }
                 // CHECK TOP SIDE OF NODE
-                if(i-x == neighbour.vertice){
-                    display[mazeY-1][mazeX] = ' ';  
+                if(i-y == neighbour.vertice){
+                    display[mazeX-1][mazeY] = ' ';  
                 }
                 // CHECK BOTTOM SIDE OF NODE
-                if(i+x == neighbour.vertice){
-                    display[mazeY+1][mazeX] = ' ';  
+                if(i+y == neighbour.vertice){
+                    display[mazeX+1][mazeY] = ' ';  
                 }
             }
 
+
             // tambah koordinat untuk menyesuaikan
-            mazeX +=3;
-            if(counter%x == 0){
-                mazeY+=3;
-                mazeX = 2;
+            mazeY +=3;
+            if(counter%y == 0){
+                mazeX+=3;
+                mazeY = 2;
             }
         }
         return display;
@@ -161,7 +160,7 @@ public:
 
     void displayMaze(string** arr){
         for (int i = 1 ; i<= (x*3); i++){
-            for(int j = 1 ; j<= (x*3); j++){
+            for(int j = 1 ; j<= (y*3); j++){
                 cout<< arr[i][j];
             }
             cout << endl;
@@ -175,21 +174,23 @@ private:
         // ingat posisi sekarang sudah dikunjungi
         map[currentX][currentY] = 1;
 
-        // TODO: hapus kalau sudah selesai
-        // display map
-        for (int i = 0; i < map.size(); i++)
+        // menampilkan proses generate map (jika admin)
+        if (isAdmin)
         {
-            for (int j = 0; j < map[i].size(); j++)
+            for (int i = 0; i < map.size(); i++)
             {
-                if (i == currentX && j == currentY)
-                    cout << "X ";
-                else
-                    cout << map[i][j] << " ";
+                for (int j = 0; j < map[i].size(); j++)
+                {
+                    if (i == currentX && j == currentY)
+                        cout << "X ";
+                    else
+                        cout << map[i][j] << " ";
+                }
+                cout << endl;
             }
+
             cout << endl;
         }
-
-        cout << endl;
 
         // function berhenti ketika sudah tidak ada tetangga available
         while (true)
@@ -219,36 +220,35 @@ private:
             int targetY = 0;
             if (neighbour == 1)
             {
-                vertice = convertVertice(currentX - 1, currentY);
-                // TODO: hapus kalau sudah selesai
-                cout << "vertice : " << vertice << endl;
-                maze.addEdge(convertVertice(currentX, currentY), vertice);
-                recursiveMap(map, currentX - 1, currentY);
+                targetX = currentX - 1;
+                targetY = currentY;
             }
             else if (neighbour == 2)
             {
-                vertice = convertVertice(currentX + 1, currentY);
-                // TODO: hapus kalau sudah selesai
-                cout << "vertice : " << vertice << endl;
-                maze.addEdge(convertVertice(currentX, currentY), vertice);
-                recursiveMap(map, currentX + 1, currentY);
+                targetX = currentX + 1;
+                targetY = currentY;
             }
             else if (neighbour == 3)
             {
-                vertice = convertVertice(currentX, currentY - 1);
-                // TODO: hapus kalau sudah selesai
-                cout << "vertice : " << vertice << endl;
-                maze.addEdge(convertVertice(currentX, currentY), vertice);
-                recursiveMap(map, currentX, currentY - 1);
+                targetX = currentX;
+                targetY = currentY - 1;
             }
             else if (neighbour == 4)
             {
-                vertice = convertVertice(currentX, currentY + 1);
-                // TODO: hapus kalau sudah selesai
-                cout << "vertice : " << vertice << endl;
-                maze.addEdge(convertVertice(currentX, currentY), vertice);
-                recursiveMap(map, currentX, currentY + 1);
+                targetX = currentX;
+                targetY = currentY + 1;
             }
+            
+            // menambahkan edge ke dalam graph
+            int vertice = convertVertice(targetX, targetY);
+            maze.addEdge(convertVertice(currentX, currentY), vertice);
+
+            // menampilkan posisi tetangga yang dipilih (jika admin)
+            if (isAdmin)
+                cout << "Neighbour's Vertice : " << vertice << endl;
+
+            // lanjutkan rekursif ke tetangga yang dipilih
+            recursiveMap(map, targetX, targetY);
         }
     }
 

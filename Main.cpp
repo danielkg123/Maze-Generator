@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
     // membuat maze, input ukuran maze
-    MazeGenerator generator(50, 50);
+    MazeGenerator generator(10, 30);
 
     // memberitau "aku ingin menjadi admin, aku ingin lihat proses generate maze"
     // jika ingin generate maze besar, disarankan jangan menggunakan mode admin
