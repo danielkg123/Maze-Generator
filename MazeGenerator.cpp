@@ -82,6 +82,8 @@ public:
         // membuat map (menggunakan rekursif)
         recursiveMap(map, currentX, currentY);
     }
+    
+    
 
     /* 
      * Display Maze
@@ -167,7 +169,89 @@ public:
         }
     }
 
+
+    /* 
+     * Shortest path
+     * Pembuat : Girvan Witartha
+     * NRP : C14220167
+     * menampilkan path terpendek yang didapatkan dari distance terpendek (findshortestpath)
+     */
+    //mencari titik awal yang di random
+    // untuk mendapatkan vertice mulai 
+    int titikAwal(){
+        cout<<spawnX << endl;
+        cout<<spawnY << endl;
+        return x * spawnX +spawnY;
+    };
+
+    //fungsi menampilkan display dari path yang sudah disimpan di vector 
+    void shortest() {
+        maze.findShortestPath(titikAwal(), 99);
+        vector<int> shortestPath = maze.shortestPath;
+
+        // vector yang berisi jalan terpendek 
+        cout << "Shortest Path: ";
+        for (int vertex : shortestPath) {
+            cout << vertex << " ";
+        }
+        cout << endl;
+
+        // menampilkan display 
+        string** displayWithShortestPath = getDisplayMazeWithShortestPath(shortestPath);
+
+        for (int i = 1; i <= (x * 3); i++) {
+            for (int j = 1; j <= (y * 3); j++) {
+                cout << displayWithShortestPath[i][j];
+            }
+            cout << endl;
+        }
+    }
+
+
 private:
+    string** getDisplayMazeWithShortestPath(vector<int> shortestPath) {
+        string** display = getDisplayMaze(); 
+
+        for (int vertex : shortestPath) {
+            int mazeY = 2 + (vertex % y) * 3;
+            int mazeX = 2 + (vertex / y) * 3;
+            display[mazeX][mazeY] = '*';
+        }
+
+        int startVertex = shortestPath.front();
+        int endVertex = shortestPath.back();
+        display[2 + (startVertex / y) * 3][2 + (startVertex % y) * 3] = 'E';
+        display[2 + (endVertex / y) * 3][2 + (endVertex % y) * 3] = 'S';
+
+        for (int i = 1; i < shortestPath.size(); i++) {
+            int prevVertex = shortestPath[i - 1];
+            int currVertex = shortestPath[i];
+
+            int prevY = 2 + (prevVertex % y) * 3;
+            int prevX = 2 + (prevVertex / y) * 3;
+
+            int currY = 2 + (currVertex % y) * 3;
+            int currX = 2 + (currVertex / y) * 3;
+
+            if (prevY == currY) {
+                int minY = min(prevX, currX);
+                int maxY = max(prevX, currX);
+                for (int x = minY + 1; x < maxY; x++) {
+                    display[x][prevY] = '|';
+                }
+            } else if (prevX == currX) {
+                int minX = min(prevY, currY);
+                int maxX = max(prevY, currY);
+                for (int y = minX + 1; y < maxX; y++) {
+                    display[prevX][y] = '-';
+                }
+            }
+        }
+
+        return display;
+    }
+
+
     // fungsi utama random map
     void recursiveMap(vector<vector<int> > &map, int currentX, int currentY)
     {
@@ -279,7 +363,6 @@ private:
             return array[random];
         }
     }
-
     // cek apakah posisi sekarang out of bounds atau tidak
     bool outOfBounds(vector<vector<int> > &map, int currentX, int currentY)
     {
@@ -291,4 +374,5 @@ private:
     {
         return x * this->y + y;
     }
+
 };
