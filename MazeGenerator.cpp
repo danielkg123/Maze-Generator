@@ -101,15 +101,17 @@ public:
 
         // untuk display menggunakan array base 1 bukan dari 0 jadi mudah untuk menggunakan rumus
         for (int i = 1 ; i<= (x*3); i++){
-            display[i] = new string[y*3+1];
-            for(int j = 1 ; j<= (y*3); j++){
+            display[i] = new string[y*5+1];
+            for(int j = 1 ; j<= (y*5); j++){
                 display[i][j] = "#";
             } 
         }
 
         for (int i = 1 ; i<= x; i++){
             for(int j = 1 ; j<= y; j++){
-                display[i*3-1][j*3-1] = '.'; // rumus mengambil tengah i * 3 - 1 berlaku untuk panjang dan lebar
+                display[i*3-1][j*5 - 2] = '.'; // rumus mengambil tengah i * 3 - 1 berlaku untuk panjang dan lebar
+                display[i*3-1][j*5 - 3] = ' ';
+                display[i*3-1][j*5 - 1] = ' ';
             }
         }
 
@@ -122,7 +124,7 @@ public:
 
 
 
-        int mazeY = 2; // 2 adalah vertice 0
+        int mazeY = 3; // 2 adalah vertice 0
         int mazeX = 2; // 2 adalah vertice 0
         int counter = 0;
         // cout << maze.vertices;
@@ -133,28 +135,31 @@ public:
             for (const Edge neighbour : maze.adjList[i]){
                 // CHECK LEFT SIDE OF NODE
                 if (i-1 == neighbour.vertice){
-                    display[mazeX][mazeY-1] = ' ';        
+                    display[mazeX][mazeY-2] = ' ';        
                 }
                 // CHECK RIGHT SIDE OF NODE
                 if(i+1 == neighbour.vertice){ 
-                    display[mazeX][mazeY+1] = ' ';  
+                    display[mazeX][mazeY+2] = ' ';  
                 }
                 // CHECK TOP SIDE OF NODE
                 if(i-y == neighbour.vertice){
                     display[mazeX-1][mazeY] = ' ';  
+                    display[mazeX-1][mazeY-1] = ' ';  
+                    display[mazeX-1][mazeY+1] = ' ';  
                 }
                 // CHECK BOTTOM SIDE OF NODE
                 if(i+y == neighbour.vertice){
                     display[mazeX+1][mazeY] = ' ';  
+                    display[mazeX+1][mazeY-1] = ' ';  
+                    display[mazeX+1][mazeY+1] = ' ';  
                 }
             }
 
-
             // tambah koordinat untuk menyesuaikan
-            mazeY +=3;
+            mazeY +=5;
             if(counter%y == 0){
                 mazeX+=3;
-                mazeY = 2;
+                mazeY = 3;
             }
         }
         return display;
@@ -162,7 +167,7 @@ public:
 
     void displayMaze(string** arr){
         for (int i = 1 ; i<= (x*3); i++){
-            for(int j = 1 ; j<= (y*3); j++){
+            for(int j = 1 ; j<= (y*5); j++){
                 cout<< arr[i][j];
             }
             cout << endl;
