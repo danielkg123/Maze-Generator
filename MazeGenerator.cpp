@@ -10,6 +10,7 @@ Membuat base untuk maze generator
 #include <vector>
 #include <random>
 #include "GraphAdjList.cpp"
+#include "Randomizer.cpp"
 using namespace std;
 
 // class maze generator
@@ -17,6 +18,7 @@ class MazeGenerator
 {
 public:
     GraphAdjList maze; // graph untuk menyimpan maze
+    Randomizer rd;
     int x;             // panjang maze
     int y;             // lebar maze
     int spawnX;        // posisi spawn x
@@ -184,16 +186,21 @@ public:
     //mencari titik awal yang di random
     // untuk mendapatkan vertice mulai 
     int titikAwal(){
-        cout<<spawnX << endl;
-        cout<<spawnY << endl;
-        return x * spawnX +spawnY;
+        return y * rd.genStartX(x,y) + rd.genStartY(x,y);
     };
+
+    int titikAkhir(){
+        return y * rd.genEndX(x,y)+rd.genEndY(x,y);
+    };
+
 
     //fungsi menampilkan display dari path yang sudah disimpan di vector 
     void shortest() {
-        maze.findShortestPath(titikAwal(), 99);
+        int titik_awal = titikAwal();
+        int titik_akhir = titikAkhir();
+        maze.findShortestPath(titik_awal,titik_akhir);
         vector<int> shortestPath = maze.shortestPath;
-
+        shortestPath.insert(shortestPath.begin(),titik_akhir);
         // vector yang berisi jalan terpendek 
         cout << "Shortest Path: ";
         for (int vertex : shortestPath) {
@@ -205,7 +212,7 @@ public:
         string** displayWithShortestPath = getDisplayMazeWithShortestPath(shortestPath);
 
         for (int i = 1; i <= (x * 3); i++) {
-            for (int j = 1; j <= (y * 3); j++) {
+            for (int j = 1; j <= (y * 5); j++) {
                 cout << displayWithShortestPath[i][j];
             }
             cout << endl;
@@ -218,41 +225,51 @@ private:
         string** display = getDisplayMaze(); 
 
         for (int vertex : shortestPath) {
-            int mazeY = 2 + (vertex % y) * 3;
+            int mazeY = 2 + (vertex % y) * 5;
             int mazeX = 2 + (vertex / y) * 3;
-            display[mazeX][mazeY] = '*';
+            display[mazeX][mazeY+1] = '*';
         }
 
         int startVertex = shortestPath.front();
         int endVertex = shortestPath.back();
-        display[2 + (startVertex / y) * 3][2 + (startVertex % y) * 3] = 'E';
-        display[2 + (endVertex / y) * 3][2 + (endVertex % y) * 3] = 'S';
+        display[2 + (startVertex / y) * 3][2 + (startVertex % y) * 5 + 1 ] = 'E';
+        display[2 + (endVertex / y) * 3][2 + (endVertex % y) * 5 + 1] = 'S';
 
         for (int i = 1; i < shortestPath.size(); i++) {
             int prevVertex = shortestPath[i - 1];
             int currVertex = shortestPath[i];
-
-            int prevY = 2 + (prevVertex % y) * 3;
+            int prevY = 2 + (prevVertex % y) * 5;
             int prevX = 2 + (prevVertex / y) * 3;
 
-            int currY = 2 + (currVertex % y) * 3;
+            int currY = 2 + (currVertex % y) * 5;
             int currX = 2 + (currVertex / y) * 3;
 
             if (prevY == currY) {
                 int minY = min(prevX, currX);
                 int maxY = max(prevX, currX);
                 for (int x = minY + 1; x < maxY; x++) {
-                    display[x][prevY] = '|';
+                    if(prevVertex-currVertex < 0){
+                    display[x][prevY+1] = '^';                
+                    };
+                    if(prevVertex-currVertex > 0){
+                    display[x][prevY+1] = 'v';               
+                    }
                 }
             } else if (prevX == currX) {
                 int minX = min(prevY, currY);
                 int maxX = max(prevY, currY);
                 for (int y = minX + 1; y < maxX; y++) {
-                    display[prevX][y] = '-';
+                    if(prevVertex-currVertex < 0){
+                        display[prevX][y+1] = '<';                
+                    };
+                    if(prevVertex-currVertex > 0){
+                        display[prevX][y+1] = '>';              
+                    }
                 }
             }
         }
-
+        
+        
         return display;
     }
 
