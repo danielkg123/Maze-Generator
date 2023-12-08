@@ -19,8 +19,7 @@ struct Edge
 };
 
 // class graph
-// memakai array list untuk menyimpan edge hahahaha yah brubah lagi kapan selesai e iki
-
+// memakai array list untuk menyimpan edge jok guyon
 class GraphAdjList
 {
 public:
@@ -29,7 +28,7 @@ public:
     bool isDirected;              // menandakan graph directed atau undirected
     bool isWeighted;              // menandakan graph weighted atau unweighted
 
-    // defailt constructor
+    // default constructor
     GraphAdjList() : vertices(0), isDirected(false), isWeighted(false) {}
 
     // constructor dengan parameter
