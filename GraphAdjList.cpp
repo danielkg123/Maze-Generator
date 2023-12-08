@@ -19,7 +19,8 @@ struct Edge
 };
 
 // class graph
-// memakai array list untuk menyimpan edge hahahaha
+// memakai array list untuk menyimpan edge hahahaha yah brubah lagi kapan selesai e iki
+
 class GraphAdjList
 {
 public:
