@@ -23,10 +23,14 @@ public:
     int y;             // lebar maze
     int spawnX;        // posisi spawn x
     int spawnY;        // posisi spawn y
+    int startX;
+    int startY;
+    int endX;
+    int endY;
     bool isAdmin;      // penanda apakah ingin menampilkan proses generate maze atau tidak
 
     // constructor
-    MazeGenerator(int x = 0, int y = 0, bool isAdmin = false) : x(x), y(y), spawnX(0), spawnY(0), isAdmin(isAdmin), maze(x * y, false, false) {}
+    MazeGenerator(int x = 0, int y = 0, bool isAdmin = false) : x(x), y(y), spawnX(0), spawnY(0), startX(rd.genStartX(x, y)), startY(rd.genStartY(x, y)), endX(rd.genEndX(x, y)), endY(rd.genEndY(x, y)), isAdmin(isAdmin), maze(x * y, false, false) {}
 
     /*
      * set admin, apakah ingin melihat proses generate atau tidak
@@ -186,11 +190,11 @@ public:
     //mencari titik awal yang di random
     // untuk mendapatkan vertice mulai 
     int titikAwal(){
-        return y * rd.genStartX(x,y) + rd.genStartY(x,y);
+        return y * startX + startY;
     };
 
     int titikAkhir(){
-        return y * rd.genEndX(x,y)+rd.genEndY(x,y);
+        return y * endX + endY;
     };
 
 
@@ -198,9 +202,11 @@ public:
     void shortest() {
         int titik_awal = titikAwal();
         int titik_akhir = titikAkhir();
-        maze.findShortestPath(titik_awal,titik_akhir);
+
+        maze.findShortestPath(titik_awal, titik_akhir);
         vector<int> shortestPath = maze.shortestPath;
-        shortestPath.insert(shortestPath.begin(),titik_akhir);
+        shortestPath.insert(shortestPath.begin(), titik_akhir);
+
         // vector yang berisi jalan terpendek 
         cout << "Shortest Path: ";
         for (int vertex : shortestPath) {
@@ -268,8 +274,6 @@ private:
                 }
             }
         }
-        
-        
         return display;
     }
 

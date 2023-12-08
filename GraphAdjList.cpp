@@ -27,6 +27,7 @@ public:
     vector<vector<Edge> > adjList; // tempat menyimpan vertice
     bool isDirected;              // menandakan graph directed atau undirected
     bool isWeighted;              // menandakan graph weighted atau unweighted
+    bool isFound = false;
 
     // default constructor
     GraphAdjList() : vertices(0), isDirected(false), isWeighted(false) {}
@@ -102,6 +103,9 @@ public:
     // mencari distance tershortest menggunakan djikstra 
     void findShortestPath(int startVertex, int endVertex)
     {
+        if (isFound) {
+            return;
+        } else {
         if (startVertex < 0 || startVertex >= vertices)
         {
             cout << "Invalid start vertex\n";
@@ -140,6 +144,8 @@ public:
             shortestPath.push_back(p);
             p = path[p];
         }
+        isFound = true;
+    }
     }
     
 
@@ -167,6 +173,4 @@ private:
 
         return minVertex;
     }
-
-    
 };
