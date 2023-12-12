@@ -231,13 +231,14 @@ public:
      * NRP : C14220071
     */
     void playGame() {
+        bool isSolved = false;
         int start = titikAwal();
         int end = titikAkhir();
 
         vector<int> pathTaken;
         pathTaken.push_back(start);
 
-        while (true) {
+        while (!isSolved) {
             system("clear");
             maze.printPlayedMaze(start, end);
             system("stty raw");
@@ -270,6 +271,7 @@ public:
             case 'r':
             case 'R':
                 this->shortest();
+                isSolved = true;
                 break;
 
             default:
