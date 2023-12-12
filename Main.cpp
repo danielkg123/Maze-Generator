@@ -28,26 +28,25 @@ int main() {
 
     // Menu : c14220329 Daniel
 
-    int width = 1,length = 1;
-    // cout << "Input length: ";
-    // cin >> length;
-    // cout << "Input Width: ";
-    // cin >> width;
+    int width, length;
+    cout << "Input length: ";
+    cin >> length;
+    cout << "Input Width: ";
+    cin >> width;
 
-    // generator.generateMaze();
+    MazeGenerator generator(length, width);
+    generator.generateMaze();
     
-    // cout << "Maze Generated!" << endl;
+    cout << "Maze Generated!" << endl;
 
 
     int choice;
 
-    do
-    {
-    MazeGenerator generator(length, width);
+    do {
     cout << endl;
     cout << "Welcome to the Maze Game";
     cout << endl
-    << " 0 - Generate New Maze. \n"
+    // << " 0 - Generate New Maze. \n"
     << " 1 - Display Maze. \n"
     << " 2 - Start Game. \n"
     << " 3 - Show Shortest Path. \n"
@@ -59,15 +58,15 @@ int main() {
 
     switch (choice)
     {
-    case 0: {
-        cout << "Input length: ";
-        cin >> length;
-        cout << "Input Width: ";
-        cin >> width;
-        generator.generateMaze();
-        cout << "Maze Generated!" << endl;
-        break;
-    }
+    // case 0: {
+    //     cout << "Input length: ";
+    //     cin >> length;
+    //     cout << "Input Width: ";
+    //     cin >> width;
+    //     generator.generateMaze();
+    //     cout << "Maze Generated!" << endl;
+    //     break;
+    // }
     case 1:
     {
         cout << "Display Maze : " << endl;

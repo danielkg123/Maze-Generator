@@ -23,10 +23,10 @@ public:
     int y;             // lebar maze
     int spawnX;        // posisi spawn x
     int spawnY;        // posisi spawn y
-    int startX;
-    int startY;
-    int endX;
-    int endY;
+    int startX;        // posisi start X (utk player dan shortest player)
+    int startY;        // posisi start Y (utk player dan shortest player)
+    int endX;          // posisi end X (utk player dan shortest player)
+    int endY;          // posisi start Y (utk player dan shortest player)
     bool isAdmin;      // penanda apakah ingin menampilkan proses generate maze atau tidak
 
     // constructor
@@ -225,6 +225,60 @@ public:
         }
     }
 
+    /**
+     * Function untuk Start Game
+     * Pembuat : Alexander Yofilio Setiawan
+     * NRP : C14220071
+    */
+    void playGame() {
+        int start = titikAwal();
+        int end = titikAkhir();
+
+        vector<int> pathTaken;
+        pathTaken.push_back(start);
+
+        while (true) {
+            system("clear");
+            maze.printPlayedMaze(start, end);
+            system("stty raw");
+            cout << "Input your next step (w,a,s,d): ";
+            char move = getchar();
+            system("stty cooked");
+            cout << endl;
+
+            switch (move) {
+            case 'w':
+            case 'W':
+            case '8':
+                break;
+            
+            case 'a':
+            case 'A':
+            case '4':
+                break;
+            
+            case 's':
+            case 'S':
+            case '2':
+                break;
+
+            case 'd':
+            case 'D':
+            case '6':
+                break;
+
+            case 'r':
+            case 'R':
+                this->shortest();
+                break;
+
+            default:
+                cout << "Invalid move" << endl;
+                break;
+            }
+        }
+    }
+
 
 private:
     string** getDisplayMazeWithShortestPath(vector<int> shortestPath) {
@@ -276,8 +330,6 @@ private:
         }
         return display;
     }
-
-
     // fungsi utama random map
     void recursiveMap(vector<vector<int> > &map, int currentX, int currentY)
     {

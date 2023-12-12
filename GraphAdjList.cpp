@@ -28,6 +28,7 @@ public:
     bool isDirected;              // menandakan graph directed atau undirected
     bool isWeighted;              // menandakan graph weighted atau unweighted
     bool isFound = false;
+    bool isPlayed = false;
 
     // default constructor
     GraphAdjList() : vertices(0), isDirected(false), isWeighted(false) {}
@@ -101,9 +102,8 @@ public:
     vector<int> shortestPath;
 
     // mencari distance tershortest menggunakan djikstra 
-    void findShortestPath(int startVertex, int endVertex)
-    {
-        if (isFound) {
+    void findShortestPath(int startVertex, int endVertex) {
+        if (isFound && isPlayed) {
             return;
         } else {
         if (startVertex < 0 || startVertex >= vertices)
@@ -145,13 +145,15 @@ public:
             p = path[p];
         }
         isFound = true;
+        isPlayed = true;
     }
     }
     
+    void printPlayedMaze (int start, int end) {
 
+    }
 
 private:
-
     // function untuk cek boundaries
     bool checkBound(int vertice)
     {
