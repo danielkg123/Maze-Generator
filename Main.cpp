@@ -67,42 +67,35 @@ int main() {
     //     cout << "Maze Generated!" << endl;
     //     break;
     // }
-    case 1:
-    {
+    case 1: {
         cout << "Display Maze : " << endl;
         string** arrDisplay = generator.getDisplayMaze();
         generator.displayMaze(arrDisplay);
         break;
     }
-    case 2:
-    {
-        // program start game
+    case 2: {
+        generator.playGame();
         break;
     }
-    case 3:
-    {
+    case 3: {
         generator.shortest();
         break;
     }
 
-    case 4:
-    {
+    case 4: {
         cout << "Vertice dan edge map : " << endl;
         generator.maze.printGraph();
         break;
-
     }
 
-    case 5:
-    {
+    case 5: {
         cout << "About a Maze game that is created by us";
         break;
     }
 
-    case 6:
-    {
-    cout << "End of Program.\n";
-    break;
+    case 6: {
+        cout << "End of Program.\n";
+        break;
     }
 
     default:
