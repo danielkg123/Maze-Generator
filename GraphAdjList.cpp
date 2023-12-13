@@ -148,10 +148,6 @@ public:
         isPlayed = true;
     }
     }
-    
-    void printPlayedMaze (int start, int end) {
-
-    }
 
 private:
     // function untuk cek boundaries

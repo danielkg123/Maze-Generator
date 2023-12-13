@@ -235,104 +235,114 @@ public:
         bool isInvalid = false;
         int pStartX = startX;
         int pStartY = startY;
-        int endPX = endX;
-        int endPY = endY;
+        string** displayPath = getDisplayMaze();
 
         // vector<int> pathTaken;
         // pathTaken.push_back(start);
 
-        while (!isSolved) {
-            system("clear");
+        if (maze.isPlayed){
+            cout << "You have played the game before. Type 3 to reveal the shortest path! \n";
+            return;
+        } else {
+            while (!isSolved) {
+                system("clear");
 
-            if (isInvalid) {
-                cout << "Invalid move" << endl;
-            }
+                if (isInvalid) {
+                    cout << "Invalid move" << endl;
+                    isInvalid = false;
+                }
 
-            // maze.printPlayedMaze(start, end);
-            cout << "Input your next step (w,a,s,d): \n";
-            cout << "Type 'r' to reveal the answer! \n";
-            cout << "Your next move: ";
+                // maze.printPlayedMaze(start, end);
+                cout << "Input your next step (w,a,s,d): \n";
+                cout << "Type 'r' to reveal the answer! \n";
+                cout << "Your next move: ";
+
+                system("stty raw");
+                char move = getchar();
+                system("stty cooked");
+                cout << endl;
+
+                switch (move) {
+                case 'w':
+                case 'W':
+                case '8':
+                    if (pStartX - 1 >= 0){
+                        pStartX--;
+                    }
+                    else{
+                        isInvalid = true;
+                    }
+
+                    if (isReached(pStartX, pStartY)){
+                        cout << "You Win!" << endl;
+                        isSolved = true;
+                        maze.isPlayed = true;
+                    }
+                    break;
             
-            system("stty raw");
-            char move = getchar();
-            system("stty cooked");
-            cout << endl;
+                case 'a':
+                case 'A':
+                case '4':
+                    if (pStartY - 1 >= 0){
+                        pStartY--;
+                    }
+                    else{
+                        isInvalid = true;
+                    }
 
-            switch (move) {
-            case 'w':
-            case 'W':
-            case '8':
-                if (pStartX - 1 >= 0){
-                    pStartX--;
-                }
-                else{
-                    cout << "Invalid move" << endl;
-                }
-
-                if (isReached(pStartX, pStartY)){
-                    cout << "You Win!" << endl;
-                    isSolved = true;
-                }
-                break;
+                    if (isReached(pStartX, pStartY)){
+                        cout << "You Win!" << endl;
+                        isSolved = true;
+                        maze.isPlayed = true;
+                    }
+                    break;
             
-            case 'a':
-            case 'A':
-            case '4':
-                if (pStartY - 1 >= 0){
-                    pStartY--;
-                }
-                else{
-                    cout << "Invalid move" << endl;
-                }
+                case 's':
+                case 'S':
+                case '2':
+                    if (pStartX + 1 <= x){
+                        pStartX++;
+                    }
+                    else{
+                        isInvalid = true;
+                    }
 
-                if (isReached(pStartX, pStartY)){
-                    cout << "You Win!" << endl;
+                    if (isReached(pStartX, pStartY)){
+                        cout << "You Win!" << endl;
+                        isSolved = true;
+                        maze.isPlayed = true;
+                    }
+                    break;
+
+                case 'd':
+                case 'D':
+                case '6':
+                    if (pStartY + 1 <= y){
+                        pStartY++;
+                    }
+                    else{
+                        isInvalid = true;
+                    }
+
+                    if (isReached(pStartX, pStartY)){
+                        cout << "You Win!" << endl;
+                        isSolved = true;
+                        maze.isPlayed = true;
+                    }
+                    break;
+
+                case 'r':
+                case 'R':
+                    cout << "Revealing the answer... \n";
+                    this->shortest();
                     isSolved = true;
-                }
-                break;
-            
-            case 's':
-            case 'S':
-            case '2':
-                if (pStartX + 1 <= x){
-                    pStartX++;
-                }
-                else{
+                    maze.isPlayed = true;
+                    break;
+
+                default:
                     cout << "Invalid move" << endl;
+                    break;
                 }
-
-                if (isReached(pStartX, pStartY)){
-                    cout << "You Win!" << endl;
-                    isSolved = true;
-                }
-                break;
-
-            case 'd':
-            case 'D':
-            case '6':
-                if (pStartY + 1 <= y){
-                    pStartY++;
-                }
-                else{
-                    cout << "Invalid move" << endl;
-                }
-
-                if (isReached(pStartX, pStartY)){
-                    cout << "You Win!" << endl;
-                    isSolved = true;
-                }
-                break;
-
-            case 'r':
-            case 'R':
-                cout << "Revealing the answer... \n";
-                this->shortest();
-                isSolved = true;
-                break;
-
-            default:
-                cout << "Invalid move" << endl;
-                break;
             }
         }
     }
@@ -511,6 +521,7 @@ private:
         return x * this->y + y;
     }
 
+    // cek apakah posisi sekarang sudah mencapai end atau belum
     bool isReached (int x, int y){
         return x == endX && y == endY;
     }
