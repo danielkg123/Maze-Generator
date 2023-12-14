@@ -149,6 +149,75 @@ public:
     }
     }
 
+    string** fillPath (string** displayPath, int posX, int posY, char c){
+        
+        int realX = (posX * 3) + 2;
+        int realY = (posY * 5) + 3;
+
+        switch (c) {
+            case '^':
+                if(displayPath[realX + 1][realY] == " "){
+                    displayPath[realX + 1][realY] = '^';
+                    displayPath[realX + 2][realY] = '^';
+                    displayPath[realX + 3][realY] = '*';
+                } else if (displayPath[realX + 1][realY] == "v") {
+                    displayPath[realX + 1][realY] = ' ';
+                    displayPath[realX + 2][realY] = ' ';
+                    displayPath[realX + 3][realY] = '.';
+                }
+                displayPath[realX][realY] = 'P';
+
+            break;
+
+            case 'v':
+                if(displayPath[realX - 1][realY] == " "){
+                    displayPath[realX - 1][realY] = 'v';
+                    displayPath[realX - 2][realY] = 'v';
+                    displayPath[realX - 3][realY] = '*';
+                } else if (displayPath[realX - 1][realY] == "^") {
+                    displayPath[realX - 1][realY] = ' ';
+                    displayPath[realX - 2][realY] = ' ';
+                    displayPath[realX - 3][realY] = '.';
+                }
+                displayPath[realX][realY] = 'P';
+            break;
+
+            case '<':
+                if(displayPath[realX][realY + 1] == " "){
+                    displayPath[realX][realY + 1] = '<';
+                    displayPath[realX][realY + 2] = '<';
+                    displayPath[realX][realY + 3] = '*';
+                } else if (displayPath[realX][realY + 1] == "^") {
+                    displayPath[realX][realY + 1] = ' ';
+                    displayPath[realX][realY + 2] = ' ';
+                    displayPath[realX][realY + 3] = '.';
+                }
+                displayPath[realX][realY] = 'P';
+            break;
+
+            case '>':
+                if(displayPath[realX][realY - 1] == " "){
+                    displayPath[realX][realY - 1] = '>';
+                    displayPath[realX][realY - 2] = '>';
+                    displayPath[realX][realY - 3] = '*';
+                } else if (displayPath[realX][realY - 1] == "^") {
+                    displayPath[realX][realY - 1] = ' ';
+                    displayPath[realX][realY - 2] = ' ';
+                    displayPath[realX][realY - 3] = '.';
+                }
+                displayPath[realX][realY] = 'P';
+            break;
+
+            case 'P':
+                displayPath[realX][realY] = 'P';
+            break;
+
+            case 'E':
+                displayPath[realX][realY] = 'E';
+        }
+        return displayPath;
+    }
+
 private:
     // function untuk cek boundaries
     bool checkBound(int vertice)

@@ -236,9 +236,8 @@ public:
         int pStartX = startX;
         int pStartY = startY;
         string** displayPath = getDisplayMaze();
-
-        // vector<int> pathTaken;
-        // pathTaken.push_back(start);
+        displayPath = maze.fillPath(displayPath, pStartX, pStartY, 'P');
+        displayPath = maze.fillPath(displayPath, endX, endY, 'E');
 
         if (maze.isPlayed){
             cout << "You have played the game before. Type 3 to reveal the shortest path! \n";
@@ -252,7 +251,8 @@ public:
                     isInvalid = false;
                 }
 
-                // maze.printPlayedMaze(start, end);
+                displayMaze(displayPath);
+                
                 cout << "Input your next step (w,a,s,d): \n";
                 cout << "Type 'r' to reveal the answer! \n";
                 cout << "Your next move: ";
@@ -266,8 +266,9 @@ public:
                 case 'w':
                 case 'W':
                 case '8':
-                    if (pStartX - 1 >= 0){
+                    if ((pStartX - 1 >= 0)){
                         pStartX--;
+                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '^');
                     }
                     else{
                         isInvalid = true;
@@ -285,6 +286,7 @@ public:
                 case '4':
                     if (pStartY - 1 >= 0){
                         pStartY--;
+                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '<');
                     }
                     else{
                         isInvalid = true;
@@ -302,6 +304,7 @@ public:
                 case '2':
                     if (pStartX + 1 <= x){
                         pStartX++;
+                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, 'v');
                     }
                     else{
                         isInvalid = true;
@@ -319,6 +322,7 @@ public:
                 case '6':
                     if (pStartY + 1 <= y){
                         pStartY++;
+                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '>');
                     }
                     else{
                         isInvalid = true;
