@@ -15,28 +15,24 @@ class Randomizer {
     // Fungsi untuk menghasilkan titik mulai X
     int genStartX(int row, int col) {
         int simpanx = rand() % row;
-        cout << simpanx << endl;
         return simpanx;
     };
     
     // Fungsi untuk menghasilkan titik mulai Y
     int genStartY(int row, int col) {
         int simpany = rand() % col;
-        cout << simpany << endl;
         return simpany;
     };
 
     // Fungsi untuk menghasilkan titik akhir X
     int genEndX(int row, int col) {
         int endx = rand() % row;
-        cout << endx << endl;
         return endx;
     };
 
     // Fungsi untuk menghasilkan titik akhir Y
     int genEndY(int row, int col) {
         int endy = rand() % col;
-        cout << endy << endl;
         return endy;
     };
 };

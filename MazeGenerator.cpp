@@ -225,10 +225,11 @@ public:
         }
     }
 
-    /**
+    /*
      * Function untuk Start Game
      * Pembuat : Alexander Yofilio Setiawan
      * NRP : C14220071
+     * menerima input user dan mengubah posisi player di maze
     */
     void playGame() {
         bool isSolved = false;
