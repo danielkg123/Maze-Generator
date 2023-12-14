@@ -149,7 +149,7 @@ public:
     }
     }
 
-    string** fillPath (string** displayPath, int posX, int posY, char c){
+    string** fillPath (string** displayPath, int posX, int posY, char c, int reach = 0){
         
         int realX = (posX * 3) + 2;
         int realY = (posY * 5) + 3;
@@ -165,7 +165,15 @@ public:
                     displayPath[realX + 2][realY] = ' ';
                     displayPath[realX + 3][realY] = '.';
                 }
+
+                if (reach == 0) {
                 displayPath[realX][realY] = 'P';
+                } else {
+                    displayPath[realX][realY] = 'E';
+                    displayPath[realX + 1][realY] = '^';
+                    displayPath[realX + 2][realY] = '^';
+                    displayPath[realX + 3][realY] = '*';
+                }
 
             break;
 
@@ -179,33 +187,69 @@ public:
                     displayPath[realX - 2][realY] = ' ';
                     displayPath[realX - 3][realY] = '.';
                 }
+
+                if (reach == 0) {
                 displayPath[realX][realY] = 'P';
+                } else {
+                    displayPath[realX][realY] = 'E';
+                    displayPath[realX - 1][realY] = 'v';
+                    displayPath[realX - 2][realY] = 'v';
+                    displayPath[realX - 3][realY] = '*';
+                }
             break;
 
             case '<':
                 if(displayPath[realX][realY + 1] == " "){
                     displayPath[realX][realY + 1] = '<';
                     displayPath[realX][realY + 2] = '<';
-                    displayPath[realX][realY + 3] = '*';
-                } else if (displayPath[realX][realY + 1] == "^") {
+                    displayPath[realX][realY + 3] = '<';
+                    displayPath[realX][realY + 4] = '<';
+                    displayPath[realX][realY + 5] = '*';
+                } else if (displayPath[realX][realY + 1] == ">") {
                     displayPath[realX][realY + 1] = ' ';
                     displayPath[realX][realY + 2] = ' ';
-                    displayPath[realX][realY + 3] = '.';
+                    displayPath[realX][realY + 3] = ' ';
+                    displayPath[realX][realY + 4] = ' ';
+                    displayPath[realX][realY + 5] = '.';
                 }
+
+                if (reach == 0) {
                 displayPath[realX][realY] = 'P';
+                } else {
+                    displayPath[realX][realY] = 'E';
+                    displayPath[realX][realY + 1] = '<';
+                    displayPath[realX][realY + 2] = '<';
+                    displayPath[realX][realY + 3] = '<';
+                    displayPath[realX][realY + 4] = '<';
+                    displayPath[realX][realY + 5] = '*';
+                }
             break;
 
             case '>':
                 if(displayPath[realX][realY - 1] == " "){
                     displayPath[realX][realY - 1] = '>';
                     displayPath[realX][realY - 2] = '>';
-                    displayPath[realX][realY - 3] = '*';
-                } else if (displayPath[realX][realY - 1] == "^") {
+                    displayPath[realX][realY - 3] = '>';
+                    displayPath[realX][realY - 4] = '>';
+                    displayPath[realX][realY - 5] = '*';
+                } else if (displayPath[realX][realY - 1] == "<") {
                     displayPath[realX][realY - 1] = ' ';
                     displayPath[realX][realY - 2] = ' ';
-                    displayPath[realX][realY - 3] = '.';
+                    displayPath[realX][realY - 3] = ' ';
+                    displayPath[realX][realY - 4] = ' ';
+                    displayPath[realX][realY - 5] = '.';
                 }
+
+                if (reach == 0) {
                 displayPath[realX][realY] = 'P';
+                } else {
+                    displayPath[realX][realY] = 'E';
+                    displayPath[realX][realY - 1] = '>';
+                    displayPath[realX][realY - 2] = '>';
+                    displayPath[realX][realY - 3] = '>';
+                    displayPath[realX][realY - 4] = '>';
+                    displayPath[realX][realY - 5] = '*';
+                }
             break;
 
             case 'P':

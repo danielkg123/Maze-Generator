@@ -275,6 +275,11 @@ public:
                     }
 
                     if (isReached(pStartX, pStartY)){
+                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '^', 1);
+
+                        system("clear");
+                        displayMaze(displayPath);
+
                         cout << "You Win!" << endl;
                         isSolved = true;
                         maze.isPlayed = true;
@@ -293,6 +298,11 @@ public:
                     }
 
                     if (isReached(pStartX, pStartY)){
+                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '<', 1);
+
+                        system("clear");
+                        displayMaze(displayPath);
+
                         cout << "You Win!" << endl;
                         isSolved = true;
                         maze.isPlayed = true;
@@ -311,6 +321,11 @@ public:
                     }
 
                     if (isReached(pStartX, pStartY)){
+                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, 'v', 1);
+
+                        system("clear");
+                        displayMaze(displayPath);
+
                         cout << "You Win!" << endl;
                         isSolved = true;
                         maze.isPlayed = true;
@@ -329,6 +344,11 @@ public:
                     }
 
                     if (isReached(pStartX, pStartY)){
+                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '>', 1);
+
+                        system("clear");
+                        displayMaze(displayPath);
+
                         cout << "You Win!" << endl;
                         isSolved = true;
                         maze.isPlayed = true;
