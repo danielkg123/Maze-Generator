@@ -33,6 +33,16 @@ public:
     // default constructor
     GraphAdjList() : vertices(0), isDirected(false), isWeighted(false) {}
 
+    // destructor
+    ~GraphAdjList()
+    {
+        for (int i = 0; i < this->vertices; i++)
+        {
+            this->adjList[i].clear();
+        }
+        this->adjList.clear();
+    }
+
     // constructor dengan parameter
     GraphAdjList(int numVertices, bool isDirected = false, bool isWeighted = false)
     {

@@ -4,6 +4,10 @@
         "ostream": "cpp",
         "vector": "cpp",
         "iostream": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "__locale": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "ios": "cpp"
     }
 }

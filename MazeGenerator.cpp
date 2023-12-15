@@ -17,7 +17,7 @@ using namespace std;
 class MazeGenerator
 {
 public:
-    GraphAdjList maze; // graph untuk menyimpan maze
+    GraphAdjList *maze; // graph untuk menyimpan maze
     Randomizer rd;
     int x;             // panjang maze
     int y;             // lebar maze
@@ -29,8 +29,8 @@ public:
     int endY;          // posisi start Y (utk player dan shortest player)
     bool isAdmin;      // penanda apakah ingin menampilkan proses generate maze atau tidak
 
-    // constructor
-    MazeGenerator(int x = 0, int y = 0, bool isAdmin = false) : x(x), y(y), spawnX(0), spawnY(0), startX(rd.genStartX(x, y)), startY(rd.genStartY(x, y)), endX(rd.genEndX(x, y)), endY(rd.genEndY(x, y)), isAdmin(isAdmin), maze(x * y, false, false) {}
+    // default constructor
+    MazeGenerator() : x(0), y(0), spawnX(0), spawnY(0), startX(0), startY(0), endX(0), endY(0), isAdmin(false), maze(nullptr) {}
 
     /*
      * set admin, apakah ingin melihat proses generate atau tidak
@@ -41,16 +41,21 @@ public:
         this->isAdmin = isAdmin;
     }
 
-    void setSize(int x, int y)
+    // untuk generate maze sesuai input ukuran
+    void generateMaze(int x, int y)
     {
+        // reset graph
         this->x = x;
         this->y = y;
-        this->maze = GraphAdjList(x * y, false, false);
-    }
+        if (maze != nullptr) delete maze;
+        maze = new GraphAdjList(x * y, false, false);
 
-    // generate maze
-    void generateMaze()
-    {
+        // get random start and end
+        this->startX = rd.genStartX(x, y);
+        this->startY = rd.genStartY(x, y);
+        this->endX = rd.genEndX(x, y);
+        this->endY = rd.genEndY(x, y);
+
         // membuat array 2d untuk menandakan apakah koordinat sudah dikunjungi atau tidak
         vector<vector<int> > map(x, vector<int>(y, 0));
 
@@ -88,7 +93,12 @@ public:
         // membuat map (menggunakan rekursif)
         recursiveMap(map, currentX, currentY);
     }
-    
+
+    // untuk retry maze
+    void retryMaze()
+    {
+        generateMaze(x, y);
+    }
     
 
     /* 
@@ -133,12 +143,12 @@ public:
         int mazeY = 3; // 2 adalah vertice 0
         int mazeX = 2; // 2 adalah vertice 0
         int counter = 0;
-        // cout << maze.vertices;
-        for (int i = 0; i < maze.vertices; i++){      
+        // cout << maze->vertices;
+        for (int i = 0; i < maze->vertices; i++){      
             counter++;
             
             // cout << mazeY << " and " << mazeX <<  endl;
-            for (const Edge neighbour : maze.adjList[i]){
+            for (const Edge neighbour : maze->adjList[i]){
                 // CHECK LEFT SIDE OF NODE
                 if (i-1 == neighbour.vertice){
                     display[mazeX][mazeY-2] = ' ';        
@@ -203,8 +213,8 @@ public:
         int titik_awal = titikAwal();
         int titik_akhir = titikAkhir();
 
-        maze.findShortestPath(titik_awal, titik_akhir);
-        vector<int> shortestPath = maze.shortestPath;
+        maze->findShortestPath(titik_awal, titik_akhir);
+        vector<int> shortestPath = maze->shortestPath;
         shortestPath.insert(shortestPath.begin(), titik_akhir);
 
         // vector yang berisi jalan terpendek 
@@ -237,10 +247,10 @@ public:
         int pStartX = startX;
         int pStartY = startY;
         string** displayPath = getDisplayMaze();
-        displayPath = maze.fillPath(displayPath, pStartX, pStartY, 'P');
-        displayPath = maze.fillPath(displayPath, endX, endY, 'E');
+        displayPath = maze->fillPath(displayPath, pStartX, pStartY, 'P');
+        displayPath = maze->fillPath(displayPath, endX, endY, 'E');
 
-        if (maze.isPlayed){
+        if (maze->isPlayed){
             cout << "You have played the game before. Type 3 to reveal the shortest path! \n";
             return;
         } else {
@@ -269,22 +279,22 @@ public:
                 case '8':
                     if ((pStartX - 1 >= 0) && checkMove(displayPath, pStartX, pStartY, 'w')){
                         pStartX--;
-                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '^');
+                        displayPath = maze->fillPath(displayPath, pStartX, pStartY, '^');
                     }
                     else{
                         isInvalid = true;
                     }
 
                     if (isReached(pStartX, pStartY)){
-                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '^', 1);
-                        displayPath = maze.fillPath(displayPath, startX, startY, 'P');
+                        displayPath = maze->fillPath(displayPath, pStartX, pStartY, '^', 1);
+                        displayPath = maze->fillPath(displayPath, startX, startY, 'P');
 
                         system("clear");
                         displayMaze(displayPath);
 
                         cout << "\033[1;32mYOU WIN!\033[0m" << endl;
                         isSolved = true;
-                        maze.isPlayed = true;
+                        maze->isPlayed = true;
                     }
                     break;
             
@@ -293,22 +303,22 @@ public:
                 case '4':
                     if ((pStartY - 1 >= 0) && checkMove(displayPath, pStartX, pStartY, 'a')){
                         pStartY--;
-                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '<');
+                        displayPath = maze->fillPath(displayPath, pStartX, pStartY, '<');
                     }
                     else{
                         isInvalid = true;
                     }
 
                     if (isReached(pStartX, pStartY)){
-                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '<', 1);
-                        displayPath = maze.fillPath(displayPath, startX, startY, 'P');
+                        displayPath = maze->fillPath(displayPath, pStartX, pStartY, '<', 1);
+                        displayPath = maze->fillPath(displayPath, startX, startY, 'P');
 
                         system("clear");
                         displayMaze(displayPath);
 
                         cout << "\033[1;32mYOU WIN!\033[0m" << endl;
                         isSolved = true;
-                        maze.isPlayed = true;
+                        maze->isPlayed = true;
                     }
                     break;
             
@@ -317,22 +327,22 @@ public:
                 case '2':
                     if ((pStartX + 1 <= x) && checkMove(displayPath, pStartX, pStartY, 's')){
                         pStartX++;
-                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, 'v');
+                        displayPath = maze->fillPath(displayPath, pStartX, pStartY, 'v');
                     }
                     else{
                         isInvalid = true;
                     }
 
                     if (isReached(pStartX, pStartY)){
-                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, 'v', 1);
-                        displayPath = maze.fillPath(displayPath, startX, startY, 'P');
+                        displayPath = maze->fillPath(displayPath, pStartX, pStartY, 'v', 1);
+                        displayPath = maze->fillPath(displayPath, startX, startY, 'P');
 
                         system("clear");
                         displayMaze(displayPath);
 
                         cout << "\033[1;32mYOU WIN!\033[0m" << endl;
                         isSolved = true;
-                        maze.isPlayed = true;
+                        maze->isPlayed = true;
                     }
                     break;
 
@@ -341,22 +351,22 @@ public:
                 case '6':
                     if ((pStartY + 1 <= y) && checkMove(displayPath, pStartX, pStartY, 'd')){
                         pStartY++;
-                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '>');
+                        displayPath = maze->fillPath(displayPath, pStartX, pStartY, '>');
                     }
                     else{
                         isInvalid = true;
                     }
 
                     if (isReached(pStartX, pStartY)){
-                        displayPath = maze.fillPath(displayPath, pStartX, pStartY, '>', 1);
-                        displayPath = maze.fillPath(displayPath, startX, startY, 'P');
+                        displayPath = maze->fillPath(displayPath, pStartX, pStartY, '>', 1);
+                        displayPath = maze->fillPath(displayPath, startX, startY, 'P');
                         
                         system("clear");
                         displayMaze(displayPath);
 
                         cout << "\033[1;32mYOU WIN!\033[0m" << endl;
                         isSolved = true;
-                        maze.isPlayed = true;
+                        maze->isPlayed = true;
                     }
                     break;
 
@@ -365,7 +375,7 @@ public:
                     cout << "Revealing the answer... \n";
                     this->shortest();
                     isSolved = true;
-                    maze.isPlayed = true;
+                    maze->isPlayed = true;
                     break;
 
                 default:
@@ -500,7 +510,7 @@ private:
             
             // menambahkan edge ke dalam graph
             int vertice = convertVertice(targetX, targetY);
-            maze.addEdge(convertVertice(currentX, currentY), vertice);
+            maze->addEdge(convertVertice(currentX, currentY), vertice);
 
             // menampilkan posisi tetangga yang dipilih (jika admin)
             if (isAdmin)
