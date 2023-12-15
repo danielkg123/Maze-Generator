@@ -560,11 +560,15 @@ private:
         return x * this->y + y;
     }
 
-    // cek apakah posisi sekarang sudah mencapai end atau belum
+    /*
+    * Fungsi-fungsi pembantu untuk playGame - C14220071 Alexander Yofilio Setiawan
+    */
+   
+    // fungsi untuk mengecek apakah posisi sekarang sudah mencapai end atau belum
     bool isReached (int x, int y){
         return x == endX && y == endY;
     }
-
+    // fungsi untuk mengecek apakah move yang diinginkan valid atau tidak (tidak melewati tembok)
     bool checkMove (string** displayPath, int posX, int posY, char c){
         switch (c){
             case 'w':

@@ -159,8 +159,13 @@ public:
     }
     }
 
+    /*
+    * Fungsi untuk menampilkan path yang dipilih user
+    * Pembuat : Alexander Yofilio Setiawan
+    * NRP : C14220071
+    * Mengisi path yang dipilih user dengan karakter yang sesuai dengan arahnya, dan diberi warna
+    */
     string** fillPath (string** displayPath, int posX, int posY, char c, int reach = 0){
-        
         int realX = (posX * 3) + 2;
         int realY = (posY * 5) + 3;
 
@@ -268,6 +273,7 @@ public:
 
             case 'E':
                 displayPath[realX][realY] = "\033[1;31mE\033[0m";
+            break;
         }
         return displayPath;
     }
