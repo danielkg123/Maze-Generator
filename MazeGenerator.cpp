@@ -251,7 +251,7 @@ public:
         displayPath = maze->fillPath(displayPath, endX, endY, 'E');
 
         if (maze->isPlayed){
-            cout << "You have played the game before. Type 3 to reveal the shortest path! \n";
+            cout << "You have played the game before. Type 5 to reveal the shortest path! \n";
             return;
         } else {
             while (!isSolved) {
@@ -394,13 +394,13 @@ private:
         for (int vertex : shortestPath) {
             int mazeY = 2 + (vertex % y) * 5;
             int mazeX = 2 + (vertex / y) * 3;
-            display[mazeX][mazeY+1] = "\033[1;32m*\033[0m";
+            display[mazeX][mazeY+1] = "\033[1;34m*\033[0m";
         }
 
         int startVertex = shortestPath.front();
         int endVertex = shortestPath.back();
         display[2 + (startVertex / y) * 3][2 + (startVertex % y) * 5 + 1 ] = "\033[1;31mE\033[0m";
-        display[2 + (endVertex / y) * 3][2 + (endVertex % y) * 5 + 1] = "\033[1;31mS\033[0m";
+        display[2 + (endVertex / y) * 3][2 + (endVertex % y) * 5 + 1] = "\033[1;32mS\033[0m";
 
         for (int i = 1; i < shortestPath.size(); i++) {
             int prevVertex = shortestPath[i - 1];
@@ -416,10 +416,10 @@ private:
                 int maxY = max(prevX, currX);
                 for (int x = minY + 1; x < maxY; x++) {
                     if(prevVertex-currVertex < 0){
-                    display[x][prevY+1] = "\033[1;32m^\033[0m";                
+                    display[x][prevY+1] = "\033[1;34m^\033[0m";                
                     };
                     if(prevVertex-currVertex > 0){
-                    display[x][prevY+1] = "\033[1;32mv\033[0m";               
+                    display[x][prevY+1] = "\033[1;34mv\033[0m";               
                     }
                 }
             } else if (prevX == currX) {
@@ -427,10 +427,10 @@ private:
                 int maxX = max(prevY, currY);
                 for (int y = minX + 1; y < maxX; y++) {
                     if(prevVertex-currVertex < 0){
-                        display[prevX][y+1] = "\033[1;32m<\033[0m";                
+                        display[prevX][y+1] = "\033[1;34m<\033[0m";                
                     };
                     if(prevVertex-currVertex > 0){
-                        display[prevX][y+1] = "\033[1;32m>\033[0m";              
+                        display[prevX][y+1] = "\033[1;34m>\033[0m";              
                     }
                 }
             }
@@ -572,16 +572,16 @@ private:
     bool checkMove (string** displayPath, int posX, int posY, char c){
         switch (c){
             case 'w':
-                return (displayPath[posX * 3 + 1][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 1][posY * 5 + 3] == "\033[1;32mv\033[0m");
+                return (displayPath[posX * 3 + 1][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 1][posY * 5 + 3] == "\033[1;33mv\033[0m");
             break;
             case 'a':
-                return (displayPath[posX * 3 + 2][posY * 5 + 1] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 1] == "\033[1;32m>\033[0m");
+                return (displayPath[posX * 3 + 2][posY * 5 + 1] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 1] == "\033[1;33m>\033[0m");
             break;
             case 's':
-                return (displayPath[posX * 3 + 3][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 3][posY * 5 + 3] == "\033[1;32m^\033[0m");
+                return (displayPath[posX * 3 + 3][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 3][posY * 5 + 3] == "\033[1;33m^\033[0m");
             break;
             case 'd':
-                return (displayPath[posX * 3 + 2][posY * 5 + 5] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 5] == "\033[1;32m<\033[0m");
+                return (displayPath[posX * 3 + 2][posY * 5 + 5] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 5] == "\033[1;33m<\033[0m");
             break;
         }
     }
