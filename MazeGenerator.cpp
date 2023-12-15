@@ -277,7 +277,7 @@ public:
 
                     if (isReached(pStartX, pStartY)){
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, '^', 1);
-                        displayPath = maze.fillPath(displayPath, startX, startY, 'P', 0);
+                        displayPath = maze.fillPath(displayPath, startX, startY, 'P');
 
                         system("clear");
                         displayMaze(displayPath);
@@ -301,7 +301,7 @@ public:
 
                     if (isReached(pStartX, pStartY)){
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, '<', 1);
-                        displayPath = maze.fillPath(displayPath, startX, startY, 'P', 0);
+                        displayPath = maze.fillPath(displayPath, startX, startY, 'P');
 
                         system("clear");
                         displayMaze(displayPath);
@@ -325,7 +325,7 @@ public:
 
                     if (isReached(pStartX, pStartY)){
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, 'v', 1);
-                        displayPath = maze.fillPath(displayPath, startX, startY, 'P', 0);
+                        displayPath = maze.fillPath(displayPath, startX, startY, 'P');
 
                         system("clear");
                         displayMaze(displayPath);
@@ -349,7 +349,7 @@ public:
 
                     if (isReached(pStartX, pStartY)){
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, '>', 1);
-                        displayPath = maze.fillPath(displayPath, startX, startY, 'P', 0);
+                        displayPath = maze.fillPath(displayPath, startX, startY, 'P');
                         
                         system("clear");
                         displayMaze(displayPath);
@@ -384,13 +384,13 @@ private:
         for (int vertex : shortestPath) {
             int mazeY = 2 + (vertex % y) * 5;
             int mazeX = 2 + (vertex / y) * 3;
-            display[mazeX][mazeY+1] = '*';
+            display[mazeX][mazeY+1] = "\033[1;32m*\033[0m";
         }
 
         int startVertex = shortestPath.front();
         int endVertex = shortestPath.back();
-        display[2 + (startVertex / y) * 3][2 + (startVertex % y) * 5 + 1 ] = 'E';
-        display[2 + (endVertex / y) * 3][2 + (endVertex % y) * 5 + 1] = 'S';
+        display[2 + (startVertex / y) * 3][2 + (startVertex % y) * 5 + 1 ] = "\033[1;31mE\033[0m";
+        display[2 + (endVertex / y) * 3][2 + (endVertex % y) * 5 + 1] = "\033[1;31mS\033[0m";
 
         for (int i = 1; i < shortestPath.size(); i++) {
             int prevVertex = shortestPath[i - 1];
@@ -406,10 +406,10 @@ private:
                 int maxY = max(prevX, currX);
                 for (int x = minY + 1; x < maxY; x++) {
                     if(prevVertex-currVertex < 0){
-                    display[x][prevY+1] = '^';                
+                    display[x][prevY+1] = "\033[1;32m^\033[0m";                
                     };
                     if(prevVertex-currVertex > 0){
-                    display[x][prevY+1] = 'v';               
+                    display[x][prevY+1] = "\033[1;32mv\033[0m";               
                     }
                 }
             } else if (prevX == currX) {
@@ -417,10 +417,10 @@ private:
                 int maxX = max(prevY, currY);
                 for (int y = minX + 1; y < maxX; y++) {
                     if(prevVertex-currVertex < 0){
-                        display[prevX][y+1] = '<';                
+                        display[prevX][y+1] = "\033[1;32m<\033[0m";                
                     };
                     if(prevVertex-currVertex > 0){
-                        display[prevX][y+1] = '>';              
+                        display[prevX][y+1] = "\033[1;32m>\033[0m";              
                     }
                 }
             }
@@ -558,16 +558,16 @@ private:
     bool checkMove (string** displayPath, int posX, int posY, char c){
         switch (c){
             case 'w':
-                return (displayPath[posX * 3 + 1][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 1][posY * 5 + 3] == "v");
+                return (displayPath[posX * 3 + 1][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 1][posY * 5 + 3] == "\033[1;32mv\033[0m");
             break;
             case 'a':
-                return (displayPath[posX * 3 + 2][posY * 5 + 1] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 1] == ">");
+                return (displayPath[posX * 3 + 2][posY * 5 + 1] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 1] == "\033[1;32m>\033[0m");
             break;
             case 's':
-                return (displayPath[posX * 3 + 3][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 3][posY * 5 + 3] == "^");
+                return (displayPath[posX * 3 + 3][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 3][posY * 5 + 3] == "\033[1;32m^\033[0m");
             break;
             case 'd':
-                return (displayPath[posX * 3 + 2][posY * 5 + 5] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 5] == "<");
+                return (displayPath[posX * 3 + 2][posY * 5 + 5] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 5] == "\033[1;32m<\033[0m");
             break;
         }
     }

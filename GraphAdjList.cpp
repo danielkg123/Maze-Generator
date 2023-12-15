@@ -157,55 +157,55 @@ public:
         switch (c) {
             case '^':
                 if(displayPath[realX + 1][realY] == " "){
-                    displayPath[realX + 1][realY] = '^';
-                    displayPath[realX + 2][realY] = '^';
-                    displayPath[realX + 3][realY] = '*';
-                } else if (displayPath[realX + 1][realY] == "v") {
+                    displayPath[realX + 1][realY] = "\033[1;32m^\033[0m";
+                    displayPath[realX + 2][realY] = "\033[1;32m^\033[0m";
+                    displayPath[realX + 3][realY] = "\033[1;32m*\033[0m";
+                } else if (displayPath[realX + 1][realY] == "\033[1;32mv\033[0m") {
                     displayPath[realX + 1][realY] = ' ';
                     displayPath[realX + 2][realY] = ' ';
                     displayPath[realX + 3][realY] = '.';
                 }
 
                 if (reach == 0) {
-                displayPath[realX][realY] = 'P';
+                displayPath[realX][realY] = "\033[1;31mP\033[0m";
                 } else {
-                    displayPath[realX][realY] = 'E';
-                    displayPath[realX + 1][realY] = '^';
-                    displayPath[realX + 2][realY] = '^';
-                    displayPath[realX + 3][realY] = '*';
+                    displayPath[realX][realY] = "\033[1;31mE\033[0m";
+                    displayPath[realX + 1][realY] = "\033[1;32m^\033[0m";
+                    displayPath[realX + 2][realY] = "\033[1;32m^\033[0m";
+                    displayPath[realX + 3][realY] = "\033[1;32m*\033[0m";
                 }
 
             break;
 
             case 'v':
                 if(displayPath[realX - 1][realY] == " "){
-                    displayPath[realX - 1][realY] = 'v';
-                    displayPath[realX - 2][realY] = 'v';
-                    displayPath[realX - 3][realY] = '*';
-                } else if (displayPath[realX - 1][realY] == "^") {
+                    displayPath[realX - 1][realY] = "\033[1;32mv\033[0m";
+                    displayPath[realX - 2][realY] = "\033[1;32mv\033[0m";
+                    displayPath[realX - 3][realY] = "\033[1;32m*\033[0m";
+                } else if (displayPath[realX - 1][realY] == "\033[1;32m^\033[0m") {
                     displayPath[realX - 1][realY] = ' ';
                     displayPath[realX - 2][realY] = ' ';
                     displayPath[realX - 3][realY] = '.';
                 }
 
                 if (reach == 0) {
-                displayPath[realX][realY] = 'P';
+                displayPath[realX][realY] = "\033[1;31mP\033[0m";
                 } else {
-                    displayPath[realX][realY] = 'E';
-                    displayPath[realX - 1][realY] = 'v';
-                    displayPath[realX - 2][realY] = 'v';
-                    displayPath[realX - 3][realY] = '*';
+                    displayPath[realX][realY] = "\033[1;31mE\033[0m";
+                    displayPath[realX - 1][realY] = "\033[1;32mv\033[0m";
+                    displayPath[realX - 2][realY] = "\033[1;32mv\033[0m";
+                    displayPath[realX - 3][realY] = "\033[1;32mv\033[0m";
                 }
             break;
 
             case '<':
                 if(displayPath[realX][realY + 1] == " "){
-                    displayPath[realX][realY + 1] = '<';
-                    displayPath[realX][realY + 2] = '<';
-                    displayPath[realX][realY + 3] = '<';
-                    displayPath[realX][realY + 4] = '<';
-                    displayPath[realX][realY + 5] = '*';
-                } else if (displayPath[realX][realY + 1] == ">") {
+                    displayPath[realX][realY + 1] = "\033[1;32m<\033[0m";
+                    displayPath[realX][realY + 2] = "\033[1;32m<\033[0m";
+                    displayPath[realX][realY + 3] = "\033[1;32m<\033[0m";
+                    displayPath[realX][realY + 4] = "\033[1;32m<\033[0m";
+                    displayPath[realX][realY + 5] = "\033[1;32m*\033[0m";
+                } else if (displayPath[realX][realY + 1] == "\033[1;32m>\033[0m") {
                     displayPath[realX][realY + 1] = ' ';
                     displayPath[realX][realY + 2] = ' ';
                     displayPath[realX][realY + 3] = ' ';
@@ -214,25 +214,25 @@ public:
                 }
 
                 if (reach == 0) {
-                displayPath[realX][realY] = 'P';
+                displayPath[realX][realY] = "\033[1;31mP\033[0m";
                 } else {
-                    displayPath[realX][realY] = 'E';
-                    displayPath[realX][realY + 1] = '<';
-                    displayPath[realX][realY + 2] = '<';
-                    displayPath[realX][realY + 3] = '<';
-                    displayPath[realX][realY + 4] = '<';
-                    displayPath[realX][realY + 5] = '*';
+                    displayPath[realX][realY] = "\033[1;31mE\033[0m";
+                    displayPath[realX][realY + 1] = "\033[1;32m<\033[0m";
+                    displayPath[realX][realY + 2] = "\033[1;32m<\033[0m";
+                    displayPath[realX][realY + 3] = "\033[1;32m<\033[0m";
+                    displayPath[realX][realY + 4] = "\033[1;32m<\033[0m";
+                    displayPath[realX][realY + 5] = "\033[1;32m*\033[0m";
                 }
             break;
 
             case '>':
                 if(displayPath[realX][realY - 1] == " "){
-                    displayPath[realX][realY - 1] = '>';
-                    displayPath[realX][realY - 2] = '>';
-                    displayPath[realX][realY - 3] = '>';
-                    displayPath[realX][realY - 4] = '>';
-                    displayPath[realX][realY - 5] = '*';
-                } else if (displayPath[realX][realY - 1] == "<") {
+                    displayPath[realX][realY - 1] = "\033[1;32m>\033[0m";
+                    displayPath[realX][realY - 2] = "\033[1;32m>\033[0m";
+                    displayPath[realX][realY - 3] = "\033[1;32m>\033[0m";
+                    displayPath[realX][realY - 4] = "\033[1;32m>\033[0m";
+                    displayPath[realX][realY - 5] = "\033[1;32m*\033[0m";
+                } else if (displayPath[realX][realY - 1] == "\033[1;32m<\033[0m") {
                     displayPath[realX][realY - 1] = ' ';
                     displayPath[realX][realY - 2] = ' ';
                     displayPath[realX][realY - 3] = ' ';
@@ -241,23 +241,23 @@ public:
                 }
 
                 if (reach == 0) {
-                displayPath[realX][realY] = 'P';
+                displayPath[realX][realY] = "\033[1;31mP\033[0m";
                 } else {
-                    displayPath[realX][realY] = 'E';
-                    displayPath[realX][realY - 1] = '>';
-                    displayPath[realX][realY - 2] = '>';
-                    displayPath[realX][realY - 3] = '>';
-                    displayPath[realX][realY - 4] = '>';
-                    displayPath[realX][realY - 5] = '*';
+                    displayPath[realX][realY] = "\033[1;31m>E033[0m";
+                    displayPath[realX][realY - 1] = "\033[1;32m>\033[0m";
+                    displayPath[realX][realY - 2] = "\033[1;32m>\033[0m";
+                    displayPath[realX][realY - 3] = "\033[1;32m>\033[0m";
+                    displayPath[realX][realY - 4] = "\033[1;32m>\033[0m";
+                    displayPath[realX][realY - 5] = "\033[1;32m*\033[0m";
                 }
             break;
 
             case 'P':
-                displayPath[realX][realY] = 'P';
+                displayPath[realX][realY] = "\033[1;31mP\033[0m";
             break;
 
             case 'E':
-                displayPath[realX][realY] = 'E';
+                displayPath[realX][realY] = "\033[1;31mE\033[0m";
         }
         return displayPath;
     }
