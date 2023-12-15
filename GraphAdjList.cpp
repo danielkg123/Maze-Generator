@@ -258,7 +258,7 @@ public:
                 if (reach == 0) {
                 displayPath[realX][realY] = "\033[1;31mP\033[0m";
                 } else {
-                    displayPath[realX][realY] = "\033[1;31m>E033[0m";
+                    displayPath[realX][realY] = "\033[1;31m>E\033[0m";
                     displayPath[realX][realY - 1] = "\033[1;32m>\033[0m";
                     displayPath[realX][realY - 2] = "\033[1;32m>\033[0m";
                     displayPath[realX][realY - 3] = "\033[1;32m>\033[0m";
