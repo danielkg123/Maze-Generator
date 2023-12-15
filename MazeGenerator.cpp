@@ -248,7 +248,7 @@ public:
                 system("clear");
 
                 if (isInvalid) {
-                    cout << "Invalid move" << endl;
+                    cout << "\033[1;31mINVALID MOVE!\033[0m" << endl;
                     isInvalid = false;
                 }
 
@@ -282,7 +282,7 @@ public:
                         system("clear");
                         displayMaze(displayPath);
 
-                        cout << "You Win!" << endl;
+                        cout << "\033[1;32mYOU WIN!\033[0m" << endl;
                         isSolved = true;
                         maze.isPlayed = true;
                     }
@@ -306,7 +306,7 @@ public:
                         system("clear");
                         displayMaze(displayPath);
 
-                        cout << "You Win!" << endl;
+                        cout << "\033[1;32mYOU WIN!\033[0m" << endl;
                         isSolved = true;
                         maze.isPlayed = true;
                     }
@@ -330,7 +330,7 @@ public:
                         system("clear");
                         displayMaze(displayPath);
 
-                        cout << "You Win!" << endl;
+                        cout << "\033[1;32mYOU WIN!\033[0m" << endl;
                         isSolved = true;
                         maze.isPlayed = true;
                     }
@@ -354,7 +354,7 @@ public:
                         system("clear");
                         displayMaze(displayPath);
 
-                        cout << "You Win!" << endl;
+                        cout << "\033[1;32mYOU WIN!\033[0m" << endl;
                         isSolved = true;
                         maze.isPlayed = true;
                     }
@@ -369,7 +369,7 @@ public:
                     break;
 
                 default:
-                    cout << "Invalid move" << endl;
+                    cout << "\033[1;31mINVALID MOVE!\033[0m" << endl;
                     break;
                 }
             }
