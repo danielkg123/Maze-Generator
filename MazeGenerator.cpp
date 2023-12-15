@@ -267,7 +267,7 @@ public:
                 case 'w':
                 case 'W':
                 case '8':
-                    if ((pStartX - 1 >= 0)){
+                    if ((pStartX - 1 >= 0) && checkMove(displayPath, pStartX, pStartY, 'w')){
                         pStartX--;
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, '^');
                     }
@@ -277,6 +277,7 @@ public:
 
                     if (isReached(pStartX, pStartY)){
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, '^', 1);
+                        displayPath = maze.fillPath(displayPath, startX, startY, 'P', 0);
 
                         system("clear");
                         displayMaze(displayPath);
@@ -290,7 +291,7 @@ public:
                 case 'a':
                 case 'A':
                 case '4':
-                    if (pStartY - 1 >= 0){
+                    if ((pStartY - 1 >= 0) && checkMove(displayPath, pStartX, pStartY, 'a')){
                         pStartY--;
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, '<');
                     }
@@ -300,6 +301,7 @@ public:
 
                     if (isReached(pStartX, pStartY)){
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, '<', 1);
+                        displayPath = maze.fillPath(displayPath, startX, startY, 'P', 0);
 
                         system("clear");
                         displayMaze(displayPath);
@@ -313,7 +315,7 @@ public:
                 case 's':
                 case 'S':
                 case '2':
-                    if (pStartX + 1 <= x){
+                    if ((pStartX + 1 <= x) && checkMove(displayPath, pStartX, pStartY, 's')){
                         pStartX++;
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, 'v');
                     }
@@ -323,6 +325,7 @@ public:
 
                     if (isReached(pStartX, pStartY)){
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, 'v', 1);
+                        displayPath = maze.fillPath(displayPath, startX, startY, 'P', 0);
 
                         system("clear");
                         displayMaze(displayPath);
@@ -336,7 +339,7 @@ public:
                 case 'd':
                 case 'D':
                 case '6':
-                    if (pStartY + 1 <= y){
+                    if ((pStartY + 1 <= y) && checkMove(displayPath, pStartX, pStartY, 'd')){
                         pStartY++;
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, '>');
                     }
@@ -346,7 +349,8 @@ public:
 
                     if (isReached(pStartX, pStartY)){
                         displayPath = maze.fillPath(displayPath, pStartX, pStartY, '>', 1);
-
+                        displayPath = maze.fillPath(displayPath, startX, startY, 'P', 0);
+                        
                         system("clear");
                         displayMaze(displayPath);
 
@@ -549,5 +553,22 @@ private:
     // cek apakah posisi sekarang sudah mencapai end atau belum
     bool isReached (int x, int y){
         return x == endX && y == endY;
+    }
+
+    bool checkMove (string** displayPath, int posX, int posY, char c){
+        switch (c){
+            case 'w':
+                return (displayPath[posX * 3 + 1][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 1][posY * 5 + 3] == "v");
+            break;
+            case 'a':
+                return (displayPath[posX * 3 + 2][posY * 5 + 1] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 1] == ">");
+            break;
+            case 's':
+                return (displayPath[posX * 3 + 3][posY * 5 + 3] == " ") || (displayPath[posX * 3 + 3][posY * 5 + 3] == "^");
+            break;
+            case 'd':
+                return (displayPath[posX * 3 + 2][posY * 5 + 5] == " ") || (displayPath[posX * 3 + 2][posY * 5 + 5] == "<");
+            break;
+        }
     }
 };
