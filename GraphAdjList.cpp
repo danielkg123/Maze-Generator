@@ -24,7 +24,7 @@ class GraphAdjList
 {
 public:
     int vertices;                 // jumlah verticle
-    vector<vector<Edge>> adjList; // tempat menyimpan vertice
+    vector<vector<Edge> > adjList; // tempat menyimpan vertice
     bool isDirected;              // menandakan graph directed atau undirected
     bool isWeighted;              // menandakan graph weighted atau unweighted
     bool isFound = false;

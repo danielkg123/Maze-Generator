@@ -58,7 +58,7 @@ public:
         this->endY = rd.genEndY(x, y);
 
         // membuat array 2d untuk menandakan apakah koordinat sudah dikunjungi atau tidak
-        vector<vector<int>> map(x, vector<int>(y, 0));
+        vector<vector<int> > map(x, vector<int>(y, 0));
 
         // menampilkan posisi vertice dalam map (jika admin)
         if (isAdmin)
@@ -517,7 +517,7 @@ private:
     Membuat base untuk maze generator
     */
     // fungsi utama random map
-    void recursiveMap(vector<vector<int>> &map, int currentX, int currentY)
+    void recursiveMap(vector<vector<int> > &map, int currentX, int currentY)
     {
         // ingat posisi sekarang sudah dikunjungi
         map[currentX][currentY] = 1;
@@ -600,7 +600,7 @@ private:
         }
     }
 
-    int chooseNeighbour(vector<vector<int>> &map, int currentX, int currentY)
+    int chooseNeighbour(vector<vector<int> > &map, int currentX, int currentY)
     {
         // cek tetangga yang available, disimpan ke dalam array
         vector<int> array;
@@ -628,7 +628,7 @@ private:
         }
     }
     // cek apakah posisi sekarang out of bounds atau tidak
-    bool outOfBounds(vector<vector<int>> &map, int currentX, int currentY)
+    bool outOfBounds(vector<vector<int> > &map, int currentX, int currentY)
     {
         return currentX < 0 || currentX >= x || currentY < 0 || currentY >= y;
     }
