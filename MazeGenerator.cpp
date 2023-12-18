@@ -260,14 +260,17 @@ public:
      */
     void playGame()
     {
-        bool isSolved = false;
-        bool isInvalid = false;
-        int pStartX = startX;
-        int pStartY = startY;
+        bool isSolved = false; // boolean untuk mengecek apakah sudah ter-solve maze nya
+        bool isInvalid = false; // boolean untuk mengecek apakah sebuah langkah valid
+        int pStartX = startX; // variabel untuk menyimpan posisi player
+        int pStartY = startY; // variabel untuk menyimpan posisi player
         string **displayPath = getDisplayMaze();
+
+        // Inisialisasi posisi player dan end di maze
         displayPath = maze->fillPath(displayPath, pStartX, pStartY, 'P');
         displayPath = maze->fillPath(displayPath, endX, endY, 'E');
 
+        // Kalau game nya sudah pernah dimainkan, maka langsung tampilkan shortest path
         if (maze->isPlayed)
         {
             cout << "You have played the game before. Type 5 to reveal the shortest path! \n";
@@ -275,6 +278,7 @@ public:
         }
         else
         {
+            // Looping untuk menerima input user
             while (!isSolved)
             {
                 system("clear");
@@ -291,6 +295,8 @@ public:
                 cout << "Type 'r' to reveal the answer! \n";
                 cout << "Your next move: ";
 
+
+                // 3 baris di bawah ini adalah code untuk menerima input user tanpa perlu menekan enter
                 system("stty raw");
                 char move = getchar();
                 system("stty cooked");
@@ -298,9 +304,12 @@ public:
 
                 switch (move)
                 {
+
+                // Untuk maju (naik)
                 case 'w':
                 case 'W':
                 case '8':
+                    // Pengecekan langkah valid atau tidak
                     if ((pStartX - 1 >= 0) && checkMove(displayPath, pStartX, pStartY, 'w'))
                     {
                         pStartX--;
@@ -311,6 +320,7 @@ public:
                         isInvalid = true;
                     }
 
+                    // Pengecekan apakah sudah mencapai end atau belum
                     if (isReached(pStartX, pStartY))
                     {
                         displayPath = maze->fillPath(displayPath, pStartX, pStartY, '^', 1);
@@ -325,9 +335,11 @@ public:
                     }
                     break;
 
+                // Untuk ke kiri
                 case 'a':
                 case 'A':
                 case '4':
+                    // Pengecekan langkah valid atau tidak
                     if ((pStartY - 1 >= 0) && checkMove(displayPath, pStartX, pStartY, 'a'))
                     {
                         pStartY--;
@@ -338,6 +350,7 @@ public:
                         isInvalid = true;
                     }
 
+                    // Pengecekan apakah sudah mencapai end atau belum
                     if (isReached(pStartX, pStartY))
                     {
                         displayPath = maze->fillPath(displayPath, pStartX, pStartY, '<', 1);
@@ -352,9 +365,11 @@ public:
                     }
                     break;
 
+                // Untuk ke bawah
                 case 's':
                 case 'S':
                 case '2':
+                    // Pengecekan langkah valid atau tidak
                     if ((pStartX + 1 <= x) && checkMove(displayPath, pStartX, pStartY, 's'))
                     {
                         pStartX++;
@@ -365,6 +380,7 @@ public:
                         isInvalid = true;
                     }
 
+                    // Pengecekan apakah sudah mencapai end atau belum
                     if (isReached(pStartX, pStartY))
                     {
                         displayPath = maze->fillPath(displayPath, pStartX, pStartY, 'v', 1);
@@ -379,9 +395,11 @@ public:
                     }
                     break;
 
+                // Untuk ke kanan
                 case 'd':
                 case 'D':
                 case '6':
+                    // Pengecekan langkah valid atau tidak
                     if ((pStartY + 1 <= y) && checkMove(displayPath, pStartX, pStartY, 'd'))
                     {
                         pStartY++;
@@ -392,6 +410,7 @@ public:
                         isInvalid = true;
                     }
 
+                    // Pengecekan apakah sudah mencapai end atau belum
                     if (isReached(pStartX, pStartY))
                     {
                         displayPath = maze->fillPath(displayPath, pStartX, pStartY, '>', 1);
@@ -406,6 +425,7 @@ public:
                     }
                     break;
 
+                // Untuk menampilkan shortest path (kalau user menyerah)
                 case 'r':
                 case 'R':
                     cout << "Revealing the answer... \n";

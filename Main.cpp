@@ -1,8 +1,8 @@
 /*
- * Shortest path
+ * Tampilan Menu
  * Pembuat : Daniel Kristianto Goenadi Go, Alexander Yofilio Setiawan
  * NRP : C14220329, C14220071
- * menampilkan path terpendek yang didapatkan dari distance terpendek (findshortestpath)
+ * menampilkan menu dan opsi-opsi yang tersedia untuk user
  */
 #include <iostream>
 #include <cstdlib>
